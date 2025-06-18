@@ -15,7 +15,7 @@
 # ---------------------------------------------
 # 📁 STEP 1: GITPOD SETUP (DEVELOPER ENVIRONMENT)
 # ---------------------------------------------
-# In real-time projects, every DevOps engineer works from a secure, reproducible environment.
+# In real-time projects, every DevOps engineer works from a secure, reproducible environment. 
 # We use Gitpod here to simulate a cloud-based DevOps workstation.
  
 image:
@@ -38,12 +38,22 @@ ports:
 # ⚙️ tasks: Commands to run when the workspace starts
 tasks:
   - name: Prepare
+ 
+    # 🧠 Real-Time Use:
+    # These are the packages DevOps engineers commonly install in workstations.
+    # Keep environments reproducible and avoid manual steps!
+ 
     init: |
-      # Install base tools and dependencies
-sudo apt update && sudo apt install -y unzip default-jdk maven docker.io
-curl -fsSL https://get.docker.com | sh
+      sudo apt update
+      sudo apt install -y unzip default-jdk maven docker.io
+      curl -fsSL https://get.docker.com | sh
       sudo usermod -aG docker gitpod
       echo "✅ Gitpod DevOps environment ready."
+ 
+    # 🧠 Real-Time Use:
+    # Run once the init block completes.
+    # Used to notify or start post-setup commands like Jenkins bootstrap
+ 
     command: |
       echo "➡️ You are now inside a DevOps-ready workspace."
  
@@ -64,3 +74,6 @@ curl -fsSL https://get.docker.com | sh
 # - Enable monitoring/alerting for running services
  
 # NEXT STEP: Create .gitpod.Dockerfile → the blueprint of your DevOps machine (JDK, Docker, Terraform, etc.)
+Docker: Accelerated Container Application Development
+Docker is a platform designed to help developers build, share, and run container applications. We handle the tedious setup, so you can focus on the code.
+ 
