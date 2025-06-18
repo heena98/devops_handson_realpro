@@ -34,7 +34,8 @@ We use Gitpod here to simulate a cloud-based DevOps workstation.
  
 This file tells Gitpod how to start your environment (like devbox setup in real-time)
  
-image: file: .gitpod.Dockerfile
+image: 
+ file: .gitpod.Dockerfile
  
 ports:
  
