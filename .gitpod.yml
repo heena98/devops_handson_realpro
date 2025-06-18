@@ -74,6 +74,3 @@ tasks:
 # - Enable monitoring/alerting for running services
  
 # NEXT STEP: Create .gitpod.Dockerfile → the blueprint of your DevOps machine (JDK, Docker, Terraform, etc.)
-Docker: Accelerated Container Application Development
-Docker is a platform designed to help developers build, share, and run container applications. We handle the tedious setup, so you can focus on the code.
- 
