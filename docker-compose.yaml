@@ -1,0 +1,106 @@
+# 📦 FULL DOCKER-COMPOSE BASED DEVOPS PROJECT SETUP (JAVA + MAVEN + COMPLETE STACK)
+ 
+# ✅ STACK:
+# - Jenkins (CI/CD)
+# - Docker (Host)
+# - Kubernetes (Local via Kind/Minikube)
+# - AWS + Terraform (Infra-as-Code)
+# - Prometheus + Grafana (Monitoring)
+# - SonarQube (Code Quality)
+# - JFrog Artifactory (Artifact Storage)
+# - Ansible (Configuration Management)
+ 
+# 🚀 GOAL:
+# Run all services using Docker Compose locally without proxy/SSL issues
+# Prepare for interview & production-style DevOps projects
+ 
+# --------------------------------------------------
+# ✅ STEP 1: PROJECT STRUCTURE SETUP
+# --------------------------------------------------
+# 📁 devops_handson_realpro/
+# ├── docker-compose.yml         <-- Main Compose file
+# ├── jenkins_home/              <-- Volume for Jenkins
+# ├── sonar_data/                <-- Volume for SonarQube
+# ├── artifactory_data/          <-- Volume for JFrog
+# ├── prometheus/                <-- Prometheus config
+# │   └── prometheus.yml
+# ├── grafana/                   <-- Grafana config
+# │   └── provisioning/          <-- Data sources/dashboards
+# └── terraform/                 <-- AWS Terraform infra later
+ 
+# --------------------------------------------------
+# ✅ STEP 2: docker-compose.yml (Real-Time Format)
+# --------------------------------------------------
+ 
+version: '3.8'
+ 
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ./jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+ 
+  sonarqube:
+    image: sonarqube:lts
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      - SONARQUBE_JDBC_USERNAME=sonar
+      - SONARQUBE_JDBC_PASSWORD=sonar
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
+    volumes:
+      - ./sonar_data:/opt/sonarqube/data
+    depends_on:
+      - db
+ 
+  db:
+    image: postgres:13
+    container_name: sonar-db
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+ 
+  artifactory:
+image: releases-docker.jfrog.io/jfrog/artifactory-oss:latest
+    container_name: artifactory
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./artifactory_data:/var/opt/jfrog/artifactory
+ 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+ 
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+ 
+volumes:
+  postgres_data:
+  grafana_data:
+ 
+# --------------------------------------------------
+# 🔜 NEXT STEPS:
+# - Create prometheus.yml
+# - Prepare Jenkins pipeline to connect with SonarQube, Artifactory
+# - Add Terraform for AWS infra (later stage)
+# - Add Kubernetes/Ansible integration step-by-step
