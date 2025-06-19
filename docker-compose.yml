@@ -71,7 +71,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
  
   artifactory:
-image: releases-docker.jfrog.io/jfrog/artifactory-oss:latest
+    image: releases-docker.jfrog.io/jfrog/artifactory-oss:latest
     container_name: artifactory
     ports:
       - "8081:8081"
